@@ -43,7 +43,8 @@ test:
 
         # PHP unit and functional tests
         - yarn run build-amp
-        - ./vendor/bin/phpunit --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml
+        - case $CIRCLE_NODE_INDEX in 0) ./vendor/bin/phpunit --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml ;; 1) yarn run build-prod ;; esac:
+            parallel: true
 
         # Try to build production JS
         - yarn run build-prod
